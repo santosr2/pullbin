@@ -1,4 +1,6 @@
-# PULLBIN.py
+# PULLBIN.py DEPRECATED
+
+:warning: Change to version 1.0.0+
 
 pullbin is a script does web scraping in pastebin and ghostbin domains, saving in file.
 
