@@ -1,32 +1,73 @@
-# PULLBIN.py DEPRECATED
+# PULLBIN
 
-:warning: Change to version 1.0.0+
+pullbin is a script for artifacts download from the Pastebin or Ghostbin.
 
-pullbin is a script does web scraping in pastebin and ghostbin domains, saving in file.
+[![Python 3+](https://img.shields.io/badge/python-3+-blue.svg)](https://www.python.org/download/releases/3.0/)
 
-[![Python 2.6|2.7](https://img.shields.io/badge/python-2.6|2.7-yellow.svg)](https://www.python.org/)
+- __[Features](#features)__
+- __[Usage](#usage)__
+    - __[Interactive](#interactive)__
+    - __[Command Line](#cli)__
+    - __[API](#api)__
+        - __[Tests](#tests)__
+        - __[Persistence](#persistense)__
+- __[Notes](#notes)__
 
-### Dependences:
-    - beautifulsoup4
-    - requests
-    - python2.7
+## <a name="features"></a>Features
 
-### Installation:
-    git clone https://github.com/z1ron/pullbin.git
-    sudo pip2 install bs4 requests
+It is possible to use pullbin in three modes:
 
-### Usage:
-    python2.7 pullbin.py
+- interactive
+- command line
+- API
 
-    then, just enter a link from the domain pastebin or ghostbin,
-    for example: http://www.domain.com/KEY or https://www.domain.com/KEY
+## <a name="usage"></a>Usage
 
-### To do list:
-    - to recognize external variables and regular expressions of the operating system
-    - insert only the link key
-    - and more
+nomenclature:
 
-### Scrennshots:
-![successfully](https://raw.githubusercontent.com/z1ron/pullbin/master/img/pullbin-successfully.png)
-![pullbin usage](https://raw.githubusercontent.com/z1ron/pullbin/master/img/pullbin-usage.png)
-![pullbin error](https://raw.githubusercontent.com/z1ron/pullbin/master/img/pullbin-error.png)
+    Key - for endpoint of URL on domains
+    Domain - is a pastebin or ghostbin domain [default=pastebin]
+    Path - is a path for write artifact - API mode not support this feature
+    Filename - for set file name [default=<KEY>]
+
+### <a name="interactive"></a>Interactive
+
+For this mode just run the command below and input data
+
+    python3 main.py
+
+### <a name="cli"></a>Command Line
+
+    python3 main.py -k <KEY>
+
+For more information, run:
+
+    python3 main.py -h
+
+### <a name="api"></a>API
+
+For this mode, its possible using Docker or in CLI.
+
+In docker mode, your required docker and docker-compose installed.
+
+    docker-compose up --build -d
+
+In CLI mode, your required pip installed.
+
+    pip3 install -r requirements.txt
+    gunicorn -w 4 -b 0.0.0.0:8080 wsgi:app
+
+#### <a name="test"></a>Test
+
+for test the api, just run:
+
+    curl -XPOST -H 'Content-Type: application/json' --data '{"key": "<KEY>"}' <HOST>:8080
+
+#### <a name="persistence"></a>Persistence
+
+For docker mode, all data is write in folder /data.
+
+section of docker compose:
+
+    volumes:
+        - ./data:/data
