@@ -1,8 +1,8 @@
 # PULLBIN
 
-pullbin is a script for artifacts download from the Pastebin or Ghostbin.
-
 [![Python 3+](https://img.shields.io/badge/python-3+-blue.svg)](https://www.python.org/download/releases/3.0/)
+
+pullbin is a script for downloading artifacts from Pastebin or Ghostbin.
 
 - __[Features](#features)__
 - __[Usage](#usage)__
@@ -10,8 +10,7 @@ pullbin is a script for artifacts download from the Pastebin or Ghostbin.
     - __[Command Line](#cli)__
     - __[API](#api)__
         - __[Tests](#tests)__
-        - __[Persistence](#persistense)__
-- __[Notes](#notes)__
+        - __[Persistence](#persistence)__
 
 ## <a name="features"></a>Features
 
@@ -25,9 +24,9 @@ It is possible to use pullbin in three modes:
 
 nomenclature:
 
-    Key - for endpoint of URL on domains
-    Domain - is a pastebin or ghostbin domain [default=pastebin]
-    Path - is a path for write artifact - API mode not support this feature
+    Key - for set endpoint of URL on domains (i.e: https://pastebin.com/<KEY> or https://ghostbin.co/paste/<KEY>)
+    Domain - is the pastebin or ghostbin [default=pastebin]
+    Path - is the path for write artifact - API mode not support this feature
     Filename - for set file name [default=<KEY>]
 
 ### <a name="interactive"></a>Interactive
@@ -57,7 +56,7 @@ In CLI mode, your required pip installed.
     pip3 install -r requirements.txt
     gunicorn -w 4 -b 0.0.0.0:8080 wsgi:app
 
-#### <a name="test"></a>Test
+#### <a name="tests"></a>Test
 
 for test the api, just run:
 
