@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  pullbin:
+    build: .
+    container_name: pullbin
+    hostname: pullbin
+    restart: on-failure
+    networks:
+      - pullbin_net
+    volumes:
+      - ./data:/data
+    depends_on:
+      - proxy
+    # environment:
+    #   - DEBUG=1
+
+  proxy:
+    build: server
+    container_name: proxy
+    hostname: nginx
+    restart: always
+    networks:
+      - pullbin_net
+    ports:
+      - "8080:80"
+
+networks:
+  pullbin_net:
+    driver: bridge
