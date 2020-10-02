@@ -1,6 +1,5 @@
 .vscode
-pullbin-venv
 .languages
 *pycache*
-img
 .pullbin*
+data

@@ -1,1 +1,1 @@
-from .pullbin import Pullbin
+from pullbin.pullbin import Pullbin

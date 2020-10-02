@@ -1,6 +1,8 @@
 from enum import Enum
 from bs4 import BeautifulSoup
-from .utils import parse_extension
+from datetime import datetime
+
+from pullbin.utils import parse_extension
 
 import requests, os, re
 
@@ -24,14 +26,14 @@ class Pullbin:
 
     @staticmethod
     def _show():
-        print(r"""
+        print(f"""
                      _ _ _     _       
          _ __  _   _| | | |__ (_)_ __  
         | '_ \| | | | | | '_ \| | '_ \ 
         | |_) | |_| | | | |_) | | | | |
         | .__/ \__,_|_|_|_.__/|_|_| |_|
         |_|
-                #created by z1ron@2017-2019
+                #created by santosr@2017-{datetime.now().year}
                 
         """)
 
@@ -72,6 +74,7 @@ class Pullbin:
         self.key = key
         self.url = self._make_url()
         self.request = requests.get(self.url)
+        self.request.raise_for_status()
         status_code = self.request.status_code
         if status_code == 200:
             return True
@@ -98,15 +101,14 @@ class Pullbin:
             return soup.find("span", {"class": "paste-subtitle"}).text.rstrip()
 
     def _validate_extension(self, extension):
-        return parse_extension(self._scrap_file_extension())
+        return parse_extension(extension)
 
     def write(self):
         extension = self._validate_extension(self._scrap_file_extension())
         self.fullpath = f'{self.fullpath}.{extension}'
         with open(self.fullpath, 'w+') as file:
             file.write(self.content.get_text())
-            self.request.raise_for_status()
-            self.close()
+        self.close()
 
     def close(self):
         self.request.close()
