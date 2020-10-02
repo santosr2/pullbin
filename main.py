@@ -9,9 +9,9 @@ def interactive():
     try:
         pullbin = Pullbin()
         pullbin._show()
-        domain = input("Set domain [default=pastebin]: ")
+        domain = input("Set domain [default=pastebin]: ") or 'pastebin'
         try:
-            if not domain is None and pullbin.check_domain(domain):
+            if domain is not None and pullbin.check_domain(domain):
                 pullbin.set_domain(domain)
         except Exception as excpt:
             print(f"Domain Value ERROR: {excpt}")
@@ -54,6 +54,7 @@ def interactive():
             pullbin.write()
         except (IOError, TypeError) as error:
             print(f"Write ERROR: {error}")
+        finally:
             pullbin.close()
     
     except KeyboardInterrupt:
@@ -103,6 +104,7 @@ def cli():
         pullbin.write()
     except (IOError, TypeError) as error:
         print(f"Write ERROR: {error}")
+    finally:
         pullbin.close()
 
 if os.getenv("DOCKERNIZED"): # only for container mode
@@ -124,11 +126,10 @@ if os.getenv("DOCKERNIZED"): # only for container mode
             status_response = "404 NotFound"
 
         msg = '{"%s": {"status": %d, "message": "%s"}}' % (type_message, status, message)
-        Response(status=status_response, headers={
+        return Response(status=status_response, headers={
             "Content-Type": "application/json",
             "Content-Length": str(len(msg))
         })
-        return jsonify(msg)
 
     @app.route("/", methods=["POST"])
     def home():

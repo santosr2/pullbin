@@ -1,11 +1,14 @@
 FROM python:alpine
 
-COPY . .
+RUN apk add --upgrade gcc make musl-dev
+RUN mkdir -p /data /opt/pullbin
 
 ENV DOCKERNIZED 1
 
-RUN apk add --upgrade gcc make musl-dev
+WORKDIR /opt/pullbin
+
+COPY . .
+
 RUN pip install -r requirements.txt
-RUN mkdir -p /data
 
 CMD gunicorn -w 4 -b 0.0.0.0:8080 wsgi:app
